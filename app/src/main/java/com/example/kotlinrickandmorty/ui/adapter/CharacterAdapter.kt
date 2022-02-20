@@ -2,43 +2,34 @@ package com.example.kotlinrickandmorty.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.kotlinrickandmorty.common.base.BaseComparator
+import com.example.kotlinrickandmorty.data.network.dto.character.CharacterDto
 import com.example.kotlinrickandmorty.databinding.ItemCharacterBinding
-import com.example.richandmortyapi.data.network.dto.CharactersDto
 
-class CharacterAdapter :
-    RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder?>() {
-
-    private var characters: List<CharactersDto> = ArrayList()
-
-    fun setCharacters(characters: List<CharactersDto>) {
-        this.characters = characters
-        notifyDataSetChanged()
-    }
-
+class CharacterAdapter : PagingDataAdapter<CharacterDto, CharacterAdapter.CharacterViewHolder>(
+    BaseComparator()
+) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
-        val binding = ItemCharacterBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+        return CharacterViewHolder(
+            ItemCharacterBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent, false)
         )
-        return CharacterViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.onBind(characters.get(position))
+        getItem(position)?.let {
+            holder.onBind(it)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return characters.size
-    }
-
-    inner class CharacterViewHolder(private val binding: ItemCharacterBinding) :
-        RecyclerView.ViewHolder(
-            binding.root
-        ) {
-        fun onBind(item: CharactersDto) = with(binding) {
+    inner class CharacterViewHolder(
+        private val binding: ItemCharacterBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun onBind(item: CharacterDto) = with(binding) {
             titleIm.load(item.image)
             characterName.text = item.name
         }

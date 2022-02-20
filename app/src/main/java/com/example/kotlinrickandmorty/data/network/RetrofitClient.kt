@@ -1,6 +1,9 @@
 package com.example.kotlinrickandmorty.data.network
 
-import com.example.richandmortyapi.data.network.api.CharacterApiService
+import com.example.kotlinrickandmorty.data.network.api.CharacterApiService
+import com.example.kotlinrickandmorty.data.network.api.EpisodeApiService
+import com.example.kotlinrickandmorty.data.network.api.LocationApiService
+import com.example.kotlinrickandmorty.common.constants.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -8,6 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class RetrofitClient {
+
     private val okHttpClient: OkHttpClient = OkHttpClient()
         .newBuilder()
         .addInterceptor(provideLoggingInterceptor())
@@ -23,12 +27,20 @@ class RetrofitClient {
     }
 
     private val provideRetrofit = Retrofit.Builder()
-        .baseUrl("https://rickandmortyapi.com/api/")
+        .baseUrl(Constants.BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
     fun provideCharacterApiService(): CharacterApiService = provideRetrofit.create(
         CharacterApiService::class.java
+    )
+
+    fun provideLocationApiService(): LocationApiService = provideRetrofit.create(
+        LocationApiService::class.java
+    )
+
+    fun provideEpisodeApiService(): EpisodeApiService = provideRetrofit.create(
+        EpisodeApiService::class.java
     )
 }

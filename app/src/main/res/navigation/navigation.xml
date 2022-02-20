@@ -4,9 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/characterFragment5">
+
     <fragment
         android:id="@+id/characterFragment5"
-        android:name="com.example.kotlinrickandmorty.ui.fragment.CharacterFragment"
+        android:name="com.example.kotlinrickandmorty.ui.fragment.character.CharacterFragment"
         android:label="fragment_character"
         tools:layout="@layout/fragment_character" />
+    <fragment
+        android:id="@+id/locationFragment2"
+        android:name="com.example.kotlinrickandmorty.ui.fragment.location.LocationFragment"
+        android:label="fragment_location"
+        tools:layout="@layout/fragment_location" />
+    <fragment
+        android:id="@+id/episodeFragment2"
+        android:name="com.example.kotlinrickandmorty.ui.fragment.episode.EpisodeFragment"
+        android:label="fragment_episode"
+        tools:layout="@layout/fragment_episode" />
+
 </navigation>
